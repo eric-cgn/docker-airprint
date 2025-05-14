@@ -9,6 +9,7 @@ Fork from [quadportnick/docker-cups-airprint](https://github.com/quadportnick/do
 
 * Changed base image to Debian w/ x86 arch support so older Brother driver bins will run
 * Changed networking to macvlan to run alongside other docker services on machines (requires dedicated ip on subnet)
+* Changed the avahi service generator to include the friendly name and the product name in the txt record
 
 ## Getting Started
 
