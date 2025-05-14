@@ -127,12 +127,14 @@ class AirPrintGenerate(object):
             if v['printer-is-shared']:
                 attrs = conn.getPrinterAttributes(p)
                 uri = urlparse.urlparse(v['printer-uri-supported'])
-
+                
                 tree = ElementTree()
                 tree.parse(StringIO(XML_TEMPLATE.replace('\n', '').replace('\r', '').replace('\t', '')))
 
                 name = tree.find('name')
-                name.text = 'AirPrint %s @ %%h' % (p)
+                
+                # name.text = '%s' % (p)
+                name.text = '%s' % (v['printer-info'])
 
                 service = tree.find('service')
 
@@ -160,17 +162,21 @@ class AirPrintGenerate(object):
                 #results as well (for instance if they don't include a port)
                 #the xml would be malform'd either way
                 rp = re.sub(r'^/+', '', rp)
-                
+
+                #path = Element('txt-record')
+                #path.text = 'ty=%s' % (v['printer-info'])
+                #service.append(path)
+
                 path = Element('txt-record')
                 path.text = 'rp=%s' % (rp)
                 service.append(path)
 
                 desc = Element('txt-record')
-                desc.text = 'note=%s' % (v['printer-info'])
+                desc.text = 'note=%s' % (v['printer-location'])
                 service.append(desc)
 
                 product = Element('txt-record')
-                product.text = 'product=(GPL Ghostscript)'
+                product.text = 'product=%s' % (v['printer-make-and-model'])
                 service.append(product)
 
                 state = Element('txt-record')

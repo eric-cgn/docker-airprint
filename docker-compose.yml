@@ -1,15 +1,29 @@
-version: '3.5'
-
 services:
   cups:
-    container_name: cups
-    image: chuckcharlie/cups-avahi-airprint
-    #build: .
+    container_name: airprint
+    hostname: airprint.local
+    image: airprint
+    build: .
     restart: always
-    network_mode: "host"
     environment:
       CUPSADMIN: cups
-      CUPSPASSWORD: cups
+      CUPSPASSWORD: REPLACE_ME_CUPS_PASSWORD
     volumes:
       - "./services:/services"
       - "./config:/config"
+    networks:
+      bridge:
+        ipv4_address: REPLACE_ME_IP_ADDR
+    mac_address: REPLACE_ME_RANDOM_MAC
+    dns:
+      - REPLACE_ME_LOCAL_DNS
+
+networks:
+  bridge:
+    driver: macvlan
+    driver_opts:
+      parent: eno1
+    ipam:
+      config:
+        - subnet: REPLACE_ME_LOCAL_SUBNET
+          gateway: REPLACE_ME_LOCAL_GATEWAY

@@ -13,7 +13,7 @@ if [ -z "$CUPSPASSWORD" ]; then
 fi
 
 if [ $(grep -ci $CUPSADMIN /etc/shadow) -eq 0 ]; then
-    adduser -S -G lpadmin --no-create-home $CUPSADMIN 
+    adduser --ingroup lpadmin --no-create-home $CUPSADMIN 
 fi
 echo $CUPSADMIN:$CUPSPASSWORD | chpasswd
 
@@ -50,7 +50,7 @@ cleanup() {
 }
 
 # Set up trap for cleanup
-trap cleanup SIGTERM SIGINT
+trap cleanup TERM INT
 
 # Start avahi-daemon service in the background
 /root/avahi-service.sh &
