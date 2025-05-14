@@ -163,10 +163,6 @@ class AirPrintGenerate(object):
                 #the xml would be malform'd either way
                 rp = re.sub(r'^/+', '', rp)
 
-                #path = Element('txt-record')
-                #path.text = 'ty=%s' % (v['printer-info'])
-                #service.append(path)
-
                 path = Element('txt-record')
                 path.text = 'rp=%s' % (rp)
                 service.append(path)
@@ -176,16 +172,12 @@ class AirPrintGenerate(object):
                 service.append(desc)
 
                 product = Element('txt-record')
-                product.text = 'product=%s' % (v['printer-make-and-model'])
+                product.text = 'product=(%s)' % (v['printer-make-and-model'])
                 service.append(product)
-
-                state = Element('txt-record')
-                state.text = 'printer-state=%s' % (v['printer-state'])
-                service.append(state)
-
-                ptype = Element('txt-record')
-                ptype.text = 'printer-type=%s' % (hex(v['printer-type']))
-                service.append(ptype)
+                
+                path = Element('txt-record')
+                path.text = 'ty=%s' % (v['printer-info'])
+                service.append(path)
 
                 if attrs['color-supported']:
                     color = Element('txt-record')
