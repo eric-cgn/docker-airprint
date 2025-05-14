@@ -25,8 +25,9 @@ Fork from [quadportnick/docker-cups-airprint](https://github.com/quadportnick/do
 * Make sure you select `Share This Printer` when configuring the printer in CUPS.
 * ***After configuring your printer, you need to close the web browser for at least 60 seconds. CUPS will not write the config files until it detects the connection is closed for as long as a minute.***
 
-## Run
+## Running
 
 * Edit docker-compose, add your variables for networking and the cups password
+* `mkdir brother; cd brother` then download the deb files for the cupswrapper and lpr and place them in this directory (installed by build step)
 * `docker compose build`
 * `docker compose up`
